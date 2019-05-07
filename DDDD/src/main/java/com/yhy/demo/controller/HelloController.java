@@ -1,7 +1,8 @@
 package com.yhy.demo.controller;
 
 import com.yhy.demo.domain.User;
-import org.springframework.stereotype.Controller;
+import com.yhy.demo.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -14,13 +15,28 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class HelloController {
 
+    @Autowired
+    private UserService userService;
+
+    @PostMapping(value = "/user2")//@RequestBody User user2      String name,String password
+    public User getUser2(@RequestBody User user2){
+
+//        return new User();
+
+        userService.save(user2);
+        System.out.println(user2);
+        return user2;
+    }
+
+
     @GetMapping(value = "/user")
-    public User getUser(@RequestBody User user2){
+    public User getUser(String name,String password){
         User user = new User();
 
-        user.setName("yhy");
-        user.setPassword("123456");
+        user.setName(name);
+        user.setPassword(password);
 
-        return user2;
+        System.out.println(user);
+        return user;
     }
 }
